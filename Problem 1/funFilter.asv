@@ -1,0 +1,21 @@
+function [out_img] = funFilter(in_img,theta,ox,oy)
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+    sz = size(in_img);
+    distMat = zeros(sz(1),sz(2));
+    angleMat = zeros(sz(1),sz(2));
+    for i = 1:sz(1)
+        for j = 1:sz(2)
+            distMat(i,j) = ((i-ox)^2+(j-oy)^2)^(1/2);
+            if((i-ox)< 0)
+                angleMat(i,j) = -1*atand((j-oy)/i-ox);
+                els
+            angleMat(i,j) = atand((j-oy)/(i-ox)));
+        end
+    end
+    angleMat = angleMat+theta;
+    xCoord = round(distMat.*cosd(angleMat))+ox;
+    yCoord = round(distMat.*sind(angleMat))+oy;
+    out_img = in_img(xCoord,yCoord);
+    
+end

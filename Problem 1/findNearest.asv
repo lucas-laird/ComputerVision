@@ -1,0 +1,11 @@
+function [pix] = findNearest(in_img,coord)
+    sz = size(in_img);
+    y = 1:sz(1);
+    x = 1:sz(2);
+    xInd = repmat(x,2,sz(1));
+    yInd = repmat(y,1,sz(2));
+    diffX = abs(xInd-coord(1));
+    diffY = abs(yInd-coord(2));
+    ind = min(min(diffX+diffY));
+    pix = in_img(find((
+end

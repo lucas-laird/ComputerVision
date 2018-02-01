@@ -1,14 +1,20 @@
 function [pix] = findNearest(in_img,coord,k)
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Lucas Laird 
+% CSCI 4830 Computer Vision
+% Homework 1
+% Ioana Fleming
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     sz = size(in_img);
-    y = 1:sz(1);
-    x = 1:sz(2);
-    xInd = repmat(x,2,sz(1));
-    yInd = repmat(y,1,sz(2));
-    diffX = abs(xInd-coord(1));
-    diffY = abs(yInd-coord(2));
-    diffTot = diffX+diffY;
-    [M,I] = min(diffTot(:));
-    [i,j] = ind2sub(size(in_img),I);
-    pix = in_img(i,j,k);
+    x = 1:sz(1);
+    y = 1:sz(2);
+    %Minimize distance in x and y direction separately, geting the x and y
+    %coordinate location by doing so.
+    [we,minX] = min(abs(x-coord(1)));
+    [we,minY] = min(abs(y-coord(2)));
+    %Return pixel value at that location.
+    pix = in_img(minX,minY,k);
     
 end

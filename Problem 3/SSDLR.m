@@ -1,4 +1,4 @@
-function D = SSD(leftImage,rightImage,window,maxDisp,sigma)
+function D = SSDLR(leftImage,rightImage,window,sigma)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 sz = size(leftImage);
@@ -24,7 +24,7 @@ for i = 1:sz(1)
         y = j+wind;
         leftWindow = leftImage(x-wind:x+wind,y-wind:y+wind);
         leftWindow(:,:) = leftWindow(:,:).*filter;
-        for k = 1:maxDisp
+        for k = 1:63
             if(j+k <= sz(2))
                 rightWindow = rightImage(x-wind:x+wind,y+k-wind:y+k+wind);
                 rightWindow(:,:) = rightWindow(:,:).*filter;

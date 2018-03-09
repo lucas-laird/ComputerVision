@@ -51,7 +51,7 @@ title('Rectified Video Frames');
 frameLeftGray  = rgb2gray(frameLeftRect);
 frameRightGray = rgb2gray(frameRightRect);
     
-disparityMap = disparity(frameLeftGray, frameRightGray);
+disparityMap = NCCRL(frameLeftGray, frameRightGray,3);
 figure;
 imshow(disparityMap, [0, 64]);
 title('Disparity Map');

@@ -42,7 +42,8 @@ function idx = KMeansClustering(X, k, visualize2D, centers)
         centers = zeros(k, n);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %                                                                     %
-        %                            YOUR CODE HERE                           %
+        ind = randperm(m,k);
+        centers(ind,:) = X(ind,:);
         %                                                                     %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -73,7 +74,19 @@ function idx = KMeansClustering(X, k, visualize2D, centers)
         % point to the closest cluster.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %                                                                     %
-        %                            YOUR CODE HERE                           %
+        dist = zeros(1,k);
+        for i = 1:m
+            for j = 1:k
+                temp = (X(i,:)-centers(j,:)).^2;
+                dist(j) = sum(temp(:))^(1/2);
+            end
+            [minVal,minInd] = min(dist);
+            if(length(minInd) > 1)
+                idx(i) = minInd(1);
+            else
+                idx(i) = minInd;
+            end
+        end
         %                                                                     %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -91,7 +104,10 @@ function idx = KMeansClustering(X, k, visualize2D, centers)
         % Update the cluster centers
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %                                                                     %
-        %                            YOUR CODE HERE                           %
+        for i = 1:k
+            cluster = X(idx == i,:);
+            centers(i,:) = mean(cluster);
+        end
         %                                                                     %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         

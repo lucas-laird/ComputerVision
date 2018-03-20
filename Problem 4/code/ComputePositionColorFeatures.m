@@ -17,7 +17,11 @@ function features = ComputePositionColorFeatures(img)
     features = zeros(height, width, 5);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %                                                                         %
-    %                              YOUR CODE HERE                             %
+    for i = 1:height
+        for j = 1:width
+            features(i,j,:) = [img(i,j,1),img(i,j,2),img(i,j,3),j,i];
+        end
+    end
     %                                                                         %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

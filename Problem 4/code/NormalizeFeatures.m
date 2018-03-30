@@ -15,10 +15,12 @@ function featuresNorm = NormalizeFeatures(features)
     featuresNorm = features;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                              %
-%                                YOUR CODE HERE:                               %
-%                                                                              %
-%                HINT: The functions mean and std may be useful                %
-%                                                                              %
+sz = size(features);
+for i = 1:sz(3)
+    temp = features(:,:,i);
+    mu = mean(temp(:));
+    sigma = std(temp(:));
+    featuresNorm(:,:,i) = (features(:,:,i)-mu)/sigma;
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

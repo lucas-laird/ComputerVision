@@ -19,7 +19,7 @@ function features = ComputePositionColorFeatures(img)
     %                                                                         %
     for i = 1:height
         for j = 1:width
-            features(i,j,:) = [img(i,j,1),img(i,j,2),img(i,j,3),j,i];
+            features(i,j,:) = [double(img(i,j,1)),double(img(i,j,2)),double(img(i,j,3)),j,i];
         end
     end
     %                                                                         %

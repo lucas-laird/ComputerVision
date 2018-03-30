@@ -104,9 +104,8 @@ function idx = HAClustering(X, k, visualize2D)
         i = 0;
         j = 0;
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %                                                                     %
-        %                            YOUR CODE HERE                           %
-        %                                                                     %
+        [minVal1,tempInd] = min(dists(:));
+        [i,j] = ind2sub(size(dists),tempInd);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,9 +130,8 @@ function idx = HAClustering(X, k, visualize2D)
         
         % Assign all points currently in cluster j to cluster i.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %                                                                     %
-        %                            YOUR CODE HERE                           %
-        %                                                                     %
+        
+        idx(idx == j) = i;
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,9 +145,8 @@ function idx = HAClustering(X, k, visualize2D)
         % HINT: You should be able to compute both updated cluster
         % centroids in O(1) time.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %                                                                     %
-        %                            YOUR CODE HERE                           %
-        %                                                                     %
+        centroids(j,:) = Inf(length(centroids(j,:)),1);
+        centroids(i,:) = mean(X((idx == i),:));
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,9 +157,8 @@ function idx = HAClustering(X, k, visualize2D)
         
         % Update the size of clusters i and j.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %                                                                     %
-        %                            YOUR CODE HERE                           %
-        %                                                                     %
+        cluster_sizes(i) = cluster_sizes(i)+cluster_sizes(j);
+        cluster_sizes(j) = 0;
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,9 +172,13 @@ function idx = HAClustering(X, k, visualize2D)
         % Hint: You might find the pdist2 function useful.
         % Hint: Remember that the diagonal of dists must be +Inf.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %                                                                     %
-        %                            YOUR CODE HERE                           %
-        %                                                                     %
+        disti = pdist2(centroids,centroids(i,:));
+        distj = pdist2(centroids,centroids(j,:));
+        dists(i,:) = disti;
+        dists(:,i) = disti;
+        dists(j,:) = distj;
+        dists(:,j) = distj;
+        dists = dists + diag(Inf(m, 1));
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,7 +196,7 @@ function idx = HAClustering(X, k, visualize2D)
             VisualizeClusters2D(X, idx, centroids, figHandle);
             pause;
         end
-        
+        num_clusters
     end
     
     % Now we need to reindex the clusters from 1 to k

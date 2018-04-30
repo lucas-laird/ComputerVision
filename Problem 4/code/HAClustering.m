@@ -196,7 +196,6 @@ function idx = HAClustering(X, k, visualize2D)
             VisualizeClusters2D(X, idx, centroids, figHandle);
             pause;
         end
-        num_clusters
     end
     
     % Now we need to reindex the clusters from 1 to k

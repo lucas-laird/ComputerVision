@@ -40,9 +40,13 @@ def svm_loss_naive(W, X, y, reg):
   # Right now the loss is a sum over all training examples, but we want it
   # to be an average instead so we divide by num_train.
   loss /= num_train
+  dW /= num_train
 
   # Add regularization to the loss.
   loss += reg * np.sum(W * W)
+  
+  #Add regularization to the derivative
+  dW += reg*W
 
   #############################################################################
   # TODO:                                                                     #
@@ -72,6 +76,20 @@ def svm_loss_vectorized(W, X, y, reg):
   # Implement a vectorized version of the structured SVM loss, storing the    #
   # result in loss.                                                           #
   #############################################################################
+  score = X.dot(W)
+
+  yscore = score[np.arange(score.shape[0]),y]
+  margin = np.maximum(0, score-np.matrix(yscore).T+1)
+  margin[np.arange(X.shape[0]),y] = 0
+    
+    
+  loss = np.sum(margin)
+
+  # Average
+  loss /= X.shape[0]
+
+  # Add regularization
+  loss += 0.5 * reg * np.sum(W * W)
   pass
   #############################################################################
   #                             END OF YOUR CODE                              #
@@ -87,6 +105,18 @@ def svm_loss_vectorized(W, X, y, reg):
   # to reuse some of the intermediate values that you used to compute the     #
   # loss.                                                                     #
   #############################################################################
+      
+  grad = np.zeros(score.shape)
+  
+  L = margin
+
+  L[L > 0] = 1 #set the ones above 0 to 1 since they are support vectors that are contributing to gradient
+    
+  L[np.arange(score.shape[0]),y] -=  np.sum(L, axis=1).T
+  dW = np.dot(X.T,L)
+
+  dW /= X.shape[0]
+  dW += reg*W
   pass
   #############################################################################
   #                             END OF YOUR CODE                              #
